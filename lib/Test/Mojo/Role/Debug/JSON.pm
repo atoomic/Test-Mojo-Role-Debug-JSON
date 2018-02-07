@@ -1,65 +1,60 @@
-package Test::Mojo::Role::Debug;
+package Test::Mojo::Role::Debug::JSON;
 
-use Mojo::Base -base;
-use Role::Tiny;
+use Mojo::Base -role;
+
+with 'Test::Mojo::Role::Debug';
+
 use Carp qw/croak/;
+
+use Mojo::JSON qw{from_json};
 use Test::More ();
 
 # VERSION
 
-sub d {
-    my ( $self, $selector ) = @_;
-    return $self->success ? $self : $self->da( $selector );
+sub djson {
+    my ( $self ) = @_;
+    return $self->success ? $self : $self->djsona;
 }
 
-sub da {
-    my ( $self, $selector ) = @_;
-    my $markup = length($selector//'')
-        ? $self->tx->res->dom->at($selector)
-        : $self->tx->res->dom;
+sub djsona {
+    my ( $self ) = @_;
 
-    unless ( defined $markup and length $markup ) {
-        Test::More::diag "\nDEBUG DUMPER: the selector ($selector) you provided "
-            . "did not match any elements\n\n";
-        return $self;
-    }
+    local $@;
+    my $json = eval { from_json( $self->tx->res->content->asset->slurp ) };
 
-    Test::More::diag "\nDEBUG DUMPER:\n$markup\n\n";
+    Test::More::diag( $@ ) if $@;
+    Test::More::diag( "DEBUG JSON DUMPER:\n", Test::More::explain(  $json ) ) if ref $json;
 
-    $self;
+    return $self;
 }
 
-q|
-The optimist says: "The glass is half full"
-The pessimist says: "The glass is half empty"
-The programmer says: "The glass is twice as large necessary"
-|;
+1;
 
 __END__
 
 =encoding utf8
 
-=for stopwords Znet Zoffix app DOM
-
 =head1 NAME
 
-Test::Mojo::Role::Debug - Test::Mojo role to make debugging test failures easier
+Test::Mojo::Role::Debug::JSON - Test::Mojo role to make debugging test failures easier
+
+This is an extension of Test::Mojo::Role::Debug
 
 =head1 SYNOPSIS
 
 =for pod_spiffy start code section
 
     use Test::More;
-    use Test::Mojo::WithRoles 'Debug';
+    
+    use Test::Mojo::WithRoles 'Debug::JSON';
+    
     my $t = Test::Mojo::WithRoles->new('MyApp');
 
     $t->get_ok('/')->status_is(200)
         ->element_exists('existant')
-        ->d         # Does nothing, since test succeeded
+        ->djson     # Does nothing, since test succeeded
         ->element_exists('non_existant')
-        ->d         # Dump entire DOM on fail
-        ->d('#foo') # Dump a specific element on fail
-        ->da        # Always dump
+        ->djson     # Dump the main content as json
     ;
 
     done_testing;
