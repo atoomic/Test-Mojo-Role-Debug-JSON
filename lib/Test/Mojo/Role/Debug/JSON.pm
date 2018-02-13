@@ -38,7 +38,10 @@ __END__
 
 Test::Mojo::Role::Debug::JSON - Test::Mojo role to make debugging test failures easier
 
-This is an extension of Test::Mojo::Role::Debug
+This is an extension of L<Test::Mojo::Role::Debug>.
+Its usage and syntax are very similar.
+Test::Mojo::Role::Debug provides the subs 'd' and 'da',
+whereas Test::Mojo::Role::Debug::JSON provides the additional 'djson' and 'djsona'
 
 =head1 SYNOPSIS
 
@@ -51,10 +54,11 @@ This is an extension of Test::Mojo::Role::Debug
     my $t = Test::Mojo::WithRoles->new('MyApp');
 
     $t->get_ok('/')->status_is(200)
-        ->element_exists('existant')
-        ->djson     # Does nothing, since test succeeded
-        ->element_exists('non_existant')
-        ->djson     # Dump the main content as json
+        ->d         # Does nothing, since test succeeded - on failure dump content
+        ->djson     # Does nothing, since test succeeded - on failure dump content as json
+        ->json_like( { status => 'ok' } )
+        ->da        # Always dump reply content
+        ->djsona    # Always dump the reply content as json
     ;
 
     done_testing;
@@ -69,30 +73,26 @@ what's what. This module comes to the rescue.
 
 =head1 METHODS
 
-You have all the methods provided by L<Test::Mojo>, plus these:
+You have all the methods provided by L<Test::Mojo>, L<Test::Mojo::Role::Debug>, plus these:
 
-=head2 C<d>
+=head2 C<djson>
 
-    $t->d;         # print entire DOM on failure
-    $t->d('#foo'); # print a specific element on failure
+    $t->djson;         # print the answer as json
 
 B<Returns> its invocant.
 On failure of previous tests (see L<Mojo::DOM/"success">),
-dumps the DOM of the current page to the screen. B<Takes> an optional
-selector to be passed to L<Mojo::DOM/"at">, in which case, only
-the markup of that element will be dumped.
+dumps the content output as json.
 
-=head2 C<da>
+=head2 C<djsona>
 
-    $t->da;
-    $t->da('#foo');
+    $t->djsona;
 
-Same as L</d>, except it always dumps, regardless of whether the previous
+Same as L</djson>, except it always dumps, regardless of whether the previous
 test failed or not.
 
 =head1 SEE ALSO
 
-L<Test::Mojo> (L<Test::Mojo/"or"> in particular), L<Mojo::DOM>
+L<Test::Mojo::Role::Debug::JSON>, L<Test::Mojo> (L<Test::Mojo/"or"> in particular), L<Mojo::DOM>
 
 =for pod_spiffy hr
 
@@ -101,7 +101,7 @@ L<Test::Mojo> (L<Test::Mojo/"or"> in particular), L<Mojo::DOM>
 =for pod_spiffy start github section
 
 Fork this module on GitHub:
-L<https://github.com/zoffixznet/Test-Mojo-Role-Debug>
+L<https://github.com/atoomic/Test-Mojo-Role-Debug-JSON>
 
 =for pod_spiffy end github section
 
@@ -110,10 +110,7 @@ L<https://github.com/zoffixznet/Test-Mojo-Role-Debug>
 =for pod_spiffy start bugs section
 
 To report bugs or request features, please use
-L<https://github.com/zoffixznet/Test-Mojo-Role-Debug/issues>
-
-If you can't access GitHub, you can email your request
-to C<bug-test-mojo-role-debug at rt.cpan.org>
+L<https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/issues>
 
 =for pod_spiffy end bugs section
 
@@ -121,7 +118,7 @@ to C<bug-test-mojo-role-debug at rt.cpan.org>
 
 =for pod_spiffy start author section
 
-=for pod_spiffy author ZOFFIX
+=for pod_spiffy author atoomic
 
 =for pod_spiffy end author section
 
@@ -129,7 +126,7 @@ to C<bug-test-mojo-role-debug at rt.cpan.org>
 
 =for pod_spiffy start contributors section
 
-=for pod_spiffy author JBERGER
+=for pod_spiffy author ZOFFIX
 
 =for pod_spiffy end contributors section
 

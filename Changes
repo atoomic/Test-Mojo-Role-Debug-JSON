@@ -1,4 +1,4 @@
-Revision history for Test-Mojo-Role-Debug
+Revision history for Test-Mojo-Role-Debug-JSON
 
 1.003004  2015-11-16
     - Fix warnings on older perls; for real this time
