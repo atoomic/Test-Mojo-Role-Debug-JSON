@@ -1,0 +1,97 @@
+# NAME
+
+Test::Mojo::Role::Debug::JSON - a JSON extension to Test::Mojo::Role::Debug
+
+# VERSION
+
+version 0.001
+
+# SYNOPSIS
+
+# DESCRIPTION
+
+When you chain up a bunch of tests and they fail, you really want an easy
+way to dump up your markup at a specific point in that chain and see
+what's what. This module comes to the rescue.
+
+# NAME
+
+Test::Mojo::Role::Debug::JSON - Test::Mojo role to make debugging test failures easier
+
+This is an extension of [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test::Mojo::Role::Debug).
+Its usage and syntax are very similar.
+Test::Mojo::Role::Debug provides the subs 'd' and 'da',
+whereas Test::Mojo::Role::Debug::JSON provides the additional 'djson' and 'djsona'
+
+    use Test::More;
+    
+    use Test::Mojo::WithRoles 'Debug::JSON';
+    
+    my $t = Test::Mojo::WithRoles->new('MyApp');
+
+    $t->get_ok('/')->status_is(200)
+        ->d         # Does nothing, since test succeeded - on failure dump content
+        ->djson     # Does nothing, since test succeeded - on failure dump content as json
+        ->json_like( { status => 'ok' } )
+        ->da        # Always dump reply content
+        ->djsona    # Always dump the reply content as json
+    ;
+
+    done_testing;
+
+# METHODS
+
+You have all the methods provided by [Test::Mojo](https://metacpan.org/pod/Test::Mojo), [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test::Mojo::Role::Debug), plus these:
+
+## `djson`
+
+    $t->djson;         # print the answer as json
+
+**Returns** its invocant.
+On failure of previous tests (see ["success" in Mojo::DOM](https://metacpan.org/pod/Mojo::DOM#success)),
+dumps the content output as json.
+
+## `djsona`
+
+    $t->djsona;
+
+Same as ["djson"](#djson), except it always dumps, regardless of whether the previous
+test failed or not.
+
+# SEE ALSO
+
+[Test::Mojo::Role::Debug::JSON](https://metacpan.org/pod/Test::Mojo::Role::Debug::JSON), [Test::Mojo](https://metacpan.org/pod/Test::Mojo) (["or" in Test::Mojo](https://metacpan.org/pod/Test::Mojo#or) in particular), [Mojo::DOM](https://metacpan.org/pod/Mojo::DOM)
+
+# REPOSITORY
+
+Fork this module on GitHub:
+[https://github.com/atoomic/Test-Mojo-Role-Debug-JSON](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON)
+
+# BUGS
+
+To report bugs or request features, please use
+[https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/issues](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/issues)
+
+Contrinuous integration coverage
+[https://travis-ci.org/atoomic/Test-Mojo-Role-Debug-JSON](https://travis-ci.org/atoomic/Test-Mojo-Role-Debug-JSON)
+
+# AUTHOR
+
+# CONTRIBUTORS
+
+# LICENSE
+
+You can use and distribute this module under the same terms as Perl itself.
+See the `LICENSE` file included in this distribution for complete
+details.
+
+# AUTHOR
+
+Nicolas R <atoomic@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2018 by Nicolas R.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

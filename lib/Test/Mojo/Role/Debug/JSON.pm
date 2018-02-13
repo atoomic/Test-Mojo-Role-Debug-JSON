@@ -1,5 +1,7 @@
 package Test::Mojo::Role::Debug::JSON;
 
+# ABSTRACT: a JSON extension to Test::Mojo::Role::Debug
+
 use Mojo::Base -role;
 
 with 'Test::Mojo::Role::Debug';
@@ -111,6 +113,9 @@ L<https://github.com/atoomic/Test-Mojo-Role-Debug-JSON>
 
 To report bugs or request features, please use
 L<https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/issues>
+
+Contrinuous integration coverage
+L<https://travis-ci.org/atoomic/Test-Mojo-Role-Debug-JSON>
 
 =for pod_spiffy end bugs section
 
