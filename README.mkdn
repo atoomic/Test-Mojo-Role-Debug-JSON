@@ -4,7 +4,7 @@ Test::Mojo::Role::Debug::JSON - a JSON extension to Test::Mojo::Role::Debug
 
 # VERSION
 
-version 0.001
+version 0.003
 
 # SYNOPSIS
 
