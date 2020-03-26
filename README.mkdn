@@ -4,7 +4,7 @@ Test::Mojo::Role::Debug::JSON - a JSON extension to Test::Mojo::Role::Debug
 
 # VERSION
 
-version 0.003
+version 0.004
 
 # SYNOPSIS
 
@@ -18,49 +18,58 @@ what's what. This module comes to the rescue.
 
 Test::Mojo::Role::Debug::JSON - Test::Mojo role to make debugging test failures easier
 
-This is an extension of [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test::Mojo::Role::Debug).
+This is an extension of [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test%3A%3AMojo%3A%3ARole%3A%3ADebug).
 Its usage and syntax are very similar.
 Test::Mojo::Role::Debug provides the subs 'd' and 'da',
 whereas Test::Mojo::Role::Debug::JSON provides the additional 'djson' and 'djsona'
 
-    use Test::More;
-    
-    use Test::Mojo::WithRoles 'Debug::JSON';
-    
-    my $t = Test::Mojo::WithRoles->new('MyApp');
+```perl
+use Test::More;
 
-    $t->get_ok('/')->status_is(200)
-        ->d         # Does nothing, since test succeeded - on failure dump content
-        ->djson     # Does nothing, since test succeeded - on failure dump content as json
-        ->json_like( { status => 'ok' } )
-        ->da        # Always dump reply content
-        ->djsona    # Always dump the reply content as json
-    ;
+use Test::Mojo::WithRoles 'Debug::JSON';
 
-    done_testing;
+my $t = Test::Mojo::WithRoles->new('MyApp');
+
+$t->get_ok('/')->status_is(200)
+    ->d         # Does nothing, since test succeeded - on failure dump content
+    ->djson     # Does nothing, since test succeeded - on failure dump content as json
+    ->json_like( { status => 'ok' } )
+    ->da        # Always dump reply content
+    ->djsona    # Always dump the reply content as json
+;
+
+done_testing;
+```
 
 # METHODS
 
-You have all the methods provided by [Test::Mojo](https://metacpan.org/pod/Test::Mojo), [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test::Mojo::Role::Debug), plus these:
+You have all the methods provided by [Test::Mojo](https://metacpan.org/pod/Test%3A%3AMojo), [Test::Mojo::Role::Debug](https://metacpan.org/pod/Test%3A%3AMojo%3A%3ARole%3A%3ADebug), plus these:
 
 ## `djson`
 
-    $t->djson;         # print the answer as json
+```
+$t->djson;            # print the answer as json
+$t->djson('/status'); # print specific node as json
+```
 
 **Returns** its invocant.
-On failure of previous tests (see ["success" in Mojo::DOM](https://metacpan.org/pod/Mojo::DOM#success)),
-dumps the content output as json.
+On failure of previous tests (see ["success" in Mojo::DOM](https://metacpan.org/pod/Mojo%3A%3ADOM#success)),
+dumps the content output as json. Optionally, takes a JSON pointer to aid subset
+larger responses.
 
 ## `djsona`
 
-    $t->djsona;
+```
+$t->djsona;
+$t->djsona('/status');
+```
 
 Same as ["djson"](#djson), except it always dumps, regardless of whether the previous
 test failed or not.
 
 # SEE ALSO
 
-[Test::Mojo::Role::Debug::JSON](https://metacpan.org/pod/Test::Mojo::Role::Debug::JSON), [Test::Mojo](https://metacpan.org/pod/Test::Mojo) (["or" in Test::Mojo](https://metacpan.org/pod/Test::Mojo#or) in particular), [Mojo::DOM](https://metacpan.org/pod/Mojo::DOM)
+[Test::Mojo::Role::Debug::JSON](https://metacpan.org/pod/Test%3A%3AMojo%3A%3ARole%3A%3ADebug%3A%3AJSON), [Test::Mojo](https://metacpan.org/pod/Test%3A%3AMojo) (["or" in Test::Mojo](https://metacpan.org/pod/Test%3A%3AMojo#or) in particular), [Mojo::DOM](https://metacpan.org/pod/Mojo%3A%3ADOM)
 
 # REPOSITORY
 
