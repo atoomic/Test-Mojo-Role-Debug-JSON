@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+- Increase Mojolicious version requirement to v7.55
+
 0.004     2020-03-26 09:19:58-06:00 America/Denver
 
 - Can optionally specify a JSON pointer to djson and jsona [Roy Storey]
