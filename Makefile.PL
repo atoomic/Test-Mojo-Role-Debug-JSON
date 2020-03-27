@@ -19,7 +19,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "IO::Handle" => 0,
     "Mojo::JSON" => 0,
-    "Mojolicious" => 0,
+    "Mojolicious" => "7.55",
     "Role::Tiny" => 0,
     "Test::Mojo::Role::Debug" => 0,
     "Test::Mojo::WithRoles" => 0
@@ -32,7 +32,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "Test::Tester" => 0
   },
-  "VERSION" => "0.004",
+  "VERSION" => "0.005",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -44,7 +44,7 @@ my %FallbackPrereqs = (
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "Mojo::JSON" => 0,
-  "Mojolicious" => 0,
+  "Mojolicious" => "7.55",
   "Role::Tiny" => 0,
   "Test::Mojo::Role::Debug" => 0,
   "Test::Mojo::WithRoles" => 0,
