@@ -1,10 +1,14 @@
+[![Actions Status](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/workflows/linux/badge.svg)](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/actions)
+[![Actions Status](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/workflows/macos/badge.svg)](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/actions)
+[![Actions Status](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/workflows/windows/badge.svg)](https://github.com/atoomic/Test-Mojo-Role-Debug-JSON/actions)
+
 # NAME
 
 Test::Mojo::Role::Debug::JSON - a JSON extension to Test::Mojo::Role::Debug
 
 # VERSION
 
-version 0.005
+version 0.006
 
 # SYNOPSIS
 
